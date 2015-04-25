@@ -1,6 +1,6 @@
 var activity = {
 	url : window.location.href,
-	time : "now",
+	time : new Date().getTime(),
 	activityId : guid()
 }
 
