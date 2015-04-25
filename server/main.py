@@ -1,9 +1,11 @@
 import json
 import logging
 import os
+import datetime
 
 from flask import Flask
 from flask import request
+from flask import jsonify
 
 
 app = Flask(__name__)
@@ -14,18 +16,24 @@ VERBOSE = True
 DEBUG = False
 
 
+@app.route('/heartbeat', methods=['GET'])
+def heartbeat():
+    return "Alive", 200
+
+
 @app.route('/', methods=['POST'])
 def parse_request():
     data = request.get_json()
     log(data)
     with open('../output/activity.log', 'a') as file:
         file.write(data['url'] + '\n')
-    return "Activity recorded", 200
+    return jsonify(message="Activity recorded"), 200
 
 
 def log(data):
     if VERBOSE:
-        print json.dumps(data)
+        dt = datetime.datetime.fromtimestamp(data['time'] / 1000.0)
+        print str(dt) + " - " + json.dumps(data)
 
 
 if __name__ == "__main__":
