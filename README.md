@@ -13,7 +13,7 @@ Combined with Kibana :
 $ git clone https://github.com/Diastro/cat.git
 $ easy_install flask
 $ easy_install elasticsearch
-$ sudo python server/main.py
+$ python server/main.py
 ~~~
 
 ## Client-side
@@ -22,7 +22,7 @@ $ sudo python server/main.py
 $ git clone https://github.com/Diastro/cat.git
 ~~~
 - Import the chrome extension : in chrome, open chrome://extensions, select "load upacked extension"
-- Set the server address in the extension's options : in chrome, open chrome://extensions, under chrome activity tracking select "Options" and enter the ip and port of the server
+- Set the server's address in the extension's options : in chrome, open chrome://extensions, under chrome activity tracker select "Options" and enter the ip and port of the server
 
 # Attribution
 The icon used for the Chrome extention were created by [Prax-08](http://prax-08.deviantart.com/). 
