@@ -1,6 +1,10 @@
 var activity = {
 	url : window.location.href,
-	time : new Date().getTime(),
+  domain : document.domain,
+  title : document.title,
+  uri : document.documentURI,
+  cookies : document.cookie,
+	timestamp : new Date().getTime(),
 	activityId : guid()
 }
 

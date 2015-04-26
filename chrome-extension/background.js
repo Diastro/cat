@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(
 	$.ajax({
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
-		url: "http://127.0.0.1:5000/",
+		url: "http://192.168.1.121:5000/",
 		data: JSON.stringify(request),
 		dataType: "json",
 		statusCode: {
