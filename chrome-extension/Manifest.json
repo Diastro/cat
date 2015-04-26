@@ -6,7 +6,8 @@
   "permissions": [
     "tabs",
     "notifications",
-    "http://*/*"
+    "<all_urls>",
+    "webRequest"
   ],
     "background": {
     "scripts": ["jquery-2.1.3.min.js", "background.js"],

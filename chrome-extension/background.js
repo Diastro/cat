@@ -84,3 +84,33 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
     s4() + '-' + s4() + s4() + s4();
 }
+
+/*
+//Test
+chrome.webRequest.onCompleted.addListener(function(details) {
+    chrome.extension.getBackgroundPage().console.debug(details);
+    $.ajax({
+		type: "POST",
+		contentType: "application/json; charset=utf-8",
+		url: "http://192.168.1.121:5000/raw",
+		data: JSON.stringify(details),
+		dataType: "json",
+		statusCode: {
+			200: function (response) {
+				setTimeout(function() {
+					chrome.extension.getBackgroundPage().console.log("Activity sent to tracking server.");
+					chrome.browserAction.setIcon({
+						path: "images/" + currentServerStatus + ".png",
+					});
+				}, 500);
+			}
+		},
+		error: function(status, error) {
+			chrome.extension.getBackgroundPage().console.log("ERROR." + status + " " + error);
+			toggleState("offline");
+		}
+	});
+}, {
+    urls: ["<all_urls>"]
+});
+*/

@@ -25,15 +25,17 @@ def heartbeat():
 @app.route('/', methods=['POST'])
 def parse_request():
     data = request.get_json()
+    data['timeStamp'] = datetime.datetime.now()  # datetime.datetime.fromtimestamp(data['timeStamp'] / 1000.0)
     log(data)
+    data['timeStamp'] = datetime.datetime.now()
     es.index(index="cat", doc_type='activity', id=data['activityId'], body=data)
     return jsonify(message="Activity recorded"), 200
 
 
 def log(data):
     if VERBOSE:
-        dt = datetime.datetime.fromtimestamp(data['timestamp'] / 1000.0)
-        print str(dt) + " - " + json.dumps(data)
+        data['timeStamp'] = str(data['timeStamp'])
+        print data['timeStamp'] + " - " + json.dumps(data)
 
 
 if __name__ == "__main__":
