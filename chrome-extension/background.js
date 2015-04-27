@@ -86,7 +86,7 @@ function guid() {
 }
 
 /*
-//Test
+//Test Code
 chrome.webRequest.onCompleted.addListener(function(details) {
     chrome.extension.getBackgroundPage().console.debug(details);
     $.ajax({
