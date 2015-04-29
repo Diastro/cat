@@ -9,30 +9,37 @@ setInterval(function(){
 // Content script listener
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-	chrome.browserAction.setIcon({
-		path: "images/request.png",
-	});
-	$.ajax({
-		type: "POST",
-		contentType: "application/json; charset=utf-8",
-		url: "http://192.168.1.121:5000/",
-		data: JSON.stringify(request),
-		dataType: "json",
-		statusCode: {
-			200: function (response) {
-				setTimeout(function() {
-					chrome.extension.getBackgroundPage().console.log("Activity sent to tracking server.");
-					chrome.browserAction.setIcon({
-						path: "images/" + currentServerStatus + ".png",
-					});
-				}, 500);
-			}
-		},
-		error: function(status, error) {
-			chrome.extension.getBackgroundPage().console.log("ERROR." + status + " " + error);
-			toggleState("offline");
-		}
-	});
+  	if(request.type == "activity"){
+		chrome.browserAction.setIcon({
+			path: "images/request.png",
+		});
+		chrome.storage.sync.get({serverinfo: '127.0.0.1:5000'}, function(info){
+			$.ajax({
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				url: info.serverinfo,
+				data: JSON.stringify(request.data),
+				dataType: "json",
+				statusCode: {
+					200: function (response) {
+						setTimeout(function() {
+							chrome.extension.getBackgroundPage().console.log("Activity sent to tracking server.");
+							chrome.browserAction.setIcon({
+								path: "images/" + currentServerStatus + ".png",
+							});
+						}, 500);
+					}
+				},
+				error: function(status, error) {
+					chrome.extension.getBackgroundPage().console.log("ERROR." + status + " " + error);
+					toggleState("offline");
+				}
+			});
+		});  	
+  	}
+  	else{
+
+  	}
 });
 
 // Server status change notification (offline/online)
@@ -61,17 +68,19 @@ function toggleState(status){
 
 // Heartbeat check
 function heartbeat(){
-	$.ajax({
-		url: "http://192.168.1.121:5000/heartbeat",
-		type: "GET",
-		statusCode: {
-			200: function (response) {
-				toggleState("online");
+	chrome.storage.sync.get({serverinfo: '127.0.0.1:5000'}, function(info){
+		$.ajax({
+			url: info.serverinfo + "/heartbeat",
+			type: "GET",
+			statusCode: {
+				200: function (response) {
+					toggleState("online");
+				}
+			},
+			error: function(data) {
+				toggleState("offline");
 			}
-		},
-		error: function(data) {
-			toggleState("offline");
-		}
+		});
 	});
 };
 
@@ -84,33 +93,3 @@ function guid() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
     s4() + '-' + s4() + s4() + s4();
 }
-
-/*
-//Test
-chrome.webRequest.onCompleted.addListener(function(details) {
-    chrome.extension.getBackgroundPage().console.debug(details);
-    $.ajax({
-		type: "POST",
-		contentType: "application/json; charset=utf-8",
-		url: "http://192.168.1.121:5000/raw",
-		data: JSON.stringify(details),
-		dataType: "json",
-		statusCode: {
-			200: function (response) {
-				setTimeout(function() {
-					chrome.extension.getBackgroundPage().console.log("Activity sent to tracking server.");
-					chrome.browserAction.setIcon({
-						path: "images/" + currentServerStatus + ".png",
-					});
-				}, 500);
-			}
-		},
-		error: function(status, error) {
-			chrome.extension.getBackgroundPage().console.log("ERROR." + status + " " + error);
-			toggleState("offline");
-		}
-	});
-}, {
-    urls: ["<all_urls>"]
-});
-*/

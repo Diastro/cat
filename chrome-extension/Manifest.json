@@ -7,7 +7,8 @@
     "tabs",
     "notifications",
     "<all_urls>",
-    "webRequest"
+    "webRequest",
+    "storage"
   ],
     "background": {
     "scripts": ["jquery-2.1.3.min.js", "background.js"],
@@ -21,6 +22,14 @@
     "matches": ["<all_urls>"],
     "run_at": "document_end",
     "js": ["jquery-2.1.3.min.js", "content.js"]
+  }],
+  "options_ui": {
+    // Required.
+    "page": "options.html",
+    // Recommended.
+    "chrome_style": true
+    // Not recommended; only provided for backwards compatibility,
+    // and will be unsupported in a future version of Chrome (TBD).
+    //"open_in_tab": true
   }
-  ]
 }

@@ -25,6 +25,6 @@ function guid() {
     s4() + '-' + s4() + s4() + s4();
 }
 
-chrome.runtime.sendMessage(activity, function(response) {
+chrome.runtime.sendMessage({type : "activity", data : activity}, function(response) {
   console.log("Activity processed.");
 });
