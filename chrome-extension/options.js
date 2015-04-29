@@ -1,6 +1,10 @@
 function save_options() {
   var serverinfo = document.getElementById('serverinfo').value;
+  if (serverinfo.indexOf("http://") !== 0) {
+    serverinfo = "http://" + serverinfo;
+  }
   chrome.storage.sync.set({serverinfo : serverinfo}, function() {
+    chrome.runtime.sendMessage({type : "forceHeartbeat"});
     var status = document.getElementById('status');
     document.getElementById('save').textContent = "Saved!";
     setTimeout(function() {document.getElementById('save').textContent = "Save";}, 1200);
@@ -8,7 +12,7 @@ function save_options() {
 }
 
 function restore_options() {
-  chrome.storage.sync.get({serverinfo: 'http://127.0.0.1:5000'}, function(items) { // Handle http:// parsing
+  chrome.storage.sync.get({serverinfo: 'http://127.0.0.1:5000'}, function(items) {
     document.getElementById('serverinfo').value = items.serverinfo;
   });
 }

@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(
 		chrome.browserAction.setIcon({
 			path: "images/request.png",
 		});
-		chrome.storage.sync.get({serverinfo: '127.0.0.1:5000'}, function(info){
+		chrome.storage.sync.get({serverinfo: 'http://127.0.0.1:5000'}, function(info){
 			$.ajax({
 				type: "POST",
 				contentType: "application/json; charset=utf-8",
@@ -37,8 +37,9 @@ chrome.runtime.onMessage.addListener(
 			});
 		});  	
   	}
-  	else{
-
+  	if(request.type == "forceHeartbeat"){
+  		heartbeat();
+  		chrome.extension.getBackgroundPage().console.log("Forcing heartbeat check.");
   	}
 });
 
@@ -66,9 +67,9 @@ function toggleState(status){
 	}
 };
 
-// Heartbeat check
+// Heartbeat
 function heartbeat(){
-	chrome.storage.sync.get({serverinfo: '127.0.0.1:5000'}, function(info){
+	chrome.storage.sync.get({serverinfo: 'http://127.0.0.1:5000'}, function(info){
 		$.ajax({
 			url: info.serverinfo + "/heartbeat",
 			type: "GET",
@@ -84,6 +85,8 @@ function heartbeat(){
 	});
 };
 
+// Util
+// from : https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
