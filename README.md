@@ -2,7 +2,7 @@
 Elasticsearch based chrome activity tracker.
 
 Combined with Kibana : 
-![Kibana](https://i.imgur.com/leHhlD5.png)
+![Kibana](https://i.imgur.com/GGOrfJz.png)
 
 # Setup instruction
 [Elasticsearch and Kibana setup instruction to come]
