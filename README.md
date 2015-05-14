@@ -5,9 +5,12 @@ Combined with Kibana :
 ![Kibana](https://i.imgur.com/GGOrfJz.png)
 
 # Setup instruction
-[Elasticsearch and Kibana setup instruction to come]
+- Setup and start ElasticSearch (i'm running it on a Raspberry PI2)
+- Start the python server (you might need to edit the code if the python server isn't running on the same machine as elastic search)
+- Install the Chrome extension and in the extension's option, make sure it points to the ip of the machine hosting elastic search
+- Start Kibana and import the index. Voila
 
-## Server-side
+## Python server setup/dependencies
 - Clone the repo, install the python dependencies and launch the python server
 ~~~ sh
 $ git clone https://github.com/Diastro/cat.git
@@ -16,7 +19,7 @@ $ easy_install elasticsearch
 $ python server/main.py
 ~~~
 
-## Client-side
+## Chrome extension setup
 - Clone the repo
 ~~~ sh
 $ git clone https://github.com/Diastro/cat.git
